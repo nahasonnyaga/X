@@ -1,0 +1,106 @@
+import 'package:flutter/material.dart';
+
+class FeedPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('For you'),
+        bottom: TabBar(
+          tabs: [
+            Tab(text: 'For you'),
+            Tab(text: 'Following'),
+            Tab(text: 'Topics'),
+          ],
+        ),
+        actions: [
+          IconButton(icon: Icon(Icons.upgrade), onPressed: () {}),
+          IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
+        ],
+      ),
+      body: ListView(
+        children: [
+          FeedPost(
+            username: "NTV Kenya",
+            handle: "@ntvkenya",
+            content: "No more free lunch for KDF as govt ends State-subsidised program",
+            mediaUrl: "https://example.com/image.jpg",
+            likeCount: 4200,
+            commentCount: 356,
+            shareCount: 868,
+            viewCount: 336000,
+          ),
+          // Add more FeedPost widgets...
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {/* Create new post */},
+        child: Icon(Icons.add),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.group), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
+        ],
+      ),
+    );
+  }
+}
+
+class FeedPost extends StatelessWidget {
+  final String username;
+  final String handle;
+  final String content;
+  final String mediaUrl;
+  final int likeCount, commentCount, shareCount, viewCount;
+
+  FeedPost({
+    required this.username,
+    required this.handle,
+    required this.content,
+    required this.mediaUrl,
+    required this.likeCount,
+    required this.commentCount,
+    required this.shareCount,
+    required this.viewCount,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListTile(
+            leading: CircleAvatar(), // user avatar
+            title: Text(username),
+            subtitle: Text(handle),
+            trailing: Icon(Icons.more_vert),
+          ),
+          if (mediaUrl.isNotEmpty)
+            Image.network(mediaUrl),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(content),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(icon: Icon(Icons.comment), onPressed: () {}),
+              Text('$commentCount'),
+              IconButton(icon: Icon(Icons.repeat), onPressed: () {}),
+              Text('$shareCount'),
+              IconButton(icon: Icon(Icons.favorite), onPressed: () {}),
+              Text('$likeCount'),
+              Icon(Icons.bar_chart),
+              Text('$viewCount'),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
